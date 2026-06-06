@@ -1,3 +1,4 @@
+import "./utils/polyfill.js";
 import { NextResponse } from "next/server";
 import { geminiExtractPIIPhrases } from "./utils/geminiClient.js";
 import { applyCoordinateRedactions } from "./utils/coordinateRedact.js";
