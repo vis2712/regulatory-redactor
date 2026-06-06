@@ -1,3 +1,6 @@
+import * as pdfjsWorker from "pdfjs-dist/legacy/build/pdf.worker.mjs";
+globalThis.pdfjsWorker = pdfjsWorker;
+
 if (typeof globalThis.DOMMatrix === 'undefined') {
   class DOMMatrix {
     constructor(init) {
