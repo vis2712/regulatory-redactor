@@ -1,6 +1,6 @@
 # RedactorAI — Zero-Retention PII Redaction Tool
 
-A privacy-first micro-SaaS that automatically detects and redacts Personally Identifiable Information (PII) from PDFs and images. Built with a zero-retention architecture — your files are never stored.
+A privacy-first micro-SaaS that automatically detects and redacts Personally Identifiable Information (PII) from PDFs and images. Built with a zero-retention architecture — your files are never stored. Live demo: [redactoraiapp.com](https://redactoraiapp.com).
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black)
 ![Tailwind](https://img.shields.io/badge/Tailwind-v4-06B6D4)
