@@ -1187,7 +1187,7 @@ export default function Home() {
       )}
 
       {/* ─── Smart Mode Tool Result Preview ─── */}
-      {result && redactedBlobUrl && redaactionMode !== "manual" && (
+      {result && redactedBlobUrl && redactionMode !== "manual" && (
         <section className="py-14 bg-surface-950">
           <div className="max-w-6xl mx-auto px-6">
             <RedactedPreview
