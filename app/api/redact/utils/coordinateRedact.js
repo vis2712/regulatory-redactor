@@ -268,16 +268,41 @@ export async function applyCoordinateRedactions(originalPdfBytes, targets, textI
   const targetSet = new Set();
   for (const t of targets) {
     if (!t || t.trim() === "") continue;
-    targetSet.add(t.trim());
+    const trimmed = t.trim();
+    const lowerTrimmed = trimmed.toLowerCase();
+    let foundAny = false;
+    for (const item of textItems) {
+      if (!item.str) continue;
+      const lowerStr = item.str.toLowerCase();
+      let index = -1;
+      while ((index = lowerStr.indexOf(lowerTrimmed, index + 1)) !== -1) {
+        const originalMatch = item.str.substring(index, index + trimmed.length);
+        targetSet.add(originalMatch);
+        foundAny = true;
+      }
+    }
+
+    if (!foundAny) {
+      targetSet.add(trimmed);
+    }
     
     // Add title-case personal-name tokens as a fallback for PDFs that split a
     // full name across text items. Avoid splitting addresses, IDs, placeholders,
     // all-caps organizations, emails, and boilerplate phrases into global words.
-    const words = t.split(/\s+/);
+    const words = trimmed.split(/\s+/);
     for (const w of words) {
       const cleanWord = w.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
       const looksLikeNameWord = /^[A-Z][a-z]+(?:['-][A-Za-z]+)?$/.test(w);
       if (looksLikeNameWord && cleanWord.length >= 3 && !GENERIC_WORDS.has(cleanWord)) {
+        for (const item of textItems) {
+          if (!item.str) continue;
+          const lowerStr = item.str.toLowerCase();
+          let idx = -1;
+          while ((idx = lowerStr.indexOf(cleanWord, idx + 1)) !== -1) {
+            const originalMatch = item.str.substring(idx, idx + w.length);
+            targetSet.add(originalMatch);
+          }
+        }
         targetSet.add(w);
       }
     }
